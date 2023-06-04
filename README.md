@@ -2,7 +2,7 @@
 
 ## Install
 ```
-curl https://raw.githubusercontent.com/Duchy12/pihole-setup/main/setup.sh -o setup.sh && chmod +x setup.sh && ./setup.sh
+curl https://raw.githubusercontent.com/Duchy12/pihole-setup/main/setup.sh -o setup.sh && chmod +x setup.sh && sudo ./setup.sh
 ```
 
 ## Change password
