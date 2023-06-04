@@ -4,6 +4,7 @@
 
 # Based on the original pi-hole setup
 timezone=$(timedatectl show --property=Timezone --value)
+local_ip=$(hostname -I | grep -oP '^\S+')
 
 PIHOLE_BASE="${PIHOLE_BASE:-$(pwd)}"
 [[ -d "$PIHOLE_BASE" ]] || mkdir -p "$PIHOLE_BASE" || { echo "Couldn't create storage directory: $PIHOLE_BASE"; exit 1; }
@@ -25,12 +26,10 @@ docker run -d \
     -e FTLCONF_LOCAL_IPV4="10.0.1.38" \
     pihole/pihole:latest
 
-local_ip=$(hostname -I | grep -oP '^\S+')
 printf 'Starting up pihole container\n'
+container_id=$(docker ps -q -n 1)
 printf 'Enter the password you want to use for pi-hole: '
 read password
-container_id=$(docker ps -q -n 1)
 docker exec -it $container_id $password -a -p $password -a -p
 echo -e "\n password: $password for pi-hole running at: http://$local_ip:6969/admin"
 exit 0
-done;
