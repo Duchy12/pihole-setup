@@ -7,7 +7,7 @@ curl https://raw.githubusercontent.com/Duchy12/pihole-setup/main/setup.sh -o set
 
 ## Change password
 ```
-curl https://raw.githubusercontent.com/Duchy12/pihole-setup/main/changepass.sh -o changepass.sh && chmod +x changepass.sh && ./changepass.sh
+curl https://raw.githubusercontent.com/Duchy12/pihole-setup/main/changepass.sh -o changepass.sh && chmod +x changepass.sh && sudo ./changepass.sh
 ```
 
 ## NOTE
