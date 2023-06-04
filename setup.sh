@@ -37,6 +37,10 @@ while true; do
     sleep 1
 done
 
+sudo systemctl enable docker
+docker update --restart=always "$container_id"
+
+
 docker exec "$container_id" pihole -a -p "pihole" &
 wait $!
 
