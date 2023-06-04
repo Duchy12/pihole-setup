@@ -37,8 +37,8 @@ while true; do
     sleep 1
 done
 
-read -r -p "Enter the password you want to use for pi-hole: " password
-docker exec -it "$container_id" pihole -a -p "$password"
+docker exec "$container_id" pihole -a -p "pihole" &
+wait $!
 
-echo -e "\npassword: $password for pi-hole running at: http://$local_ip:6969/admin"
+echo -e "\npassword: pihole for pi-hole running at: http://$local_ip:6969/admin"
 exit 0
