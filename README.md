@@ -2,7 +2,7 @@
 
 ## Install
 ```
-curl -sSL https://raw.githubusercontent.com/Duchy12/pihole-setup/master/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/Duchy12/pihole-setup/main/setup.sh | bash
 ```
 
 ## NOTE
