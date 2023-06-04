@@ -9,7 +9,6 @@ local_ip=$(hostname -I | grep -oP '^\S+')
 PIHOLE_BASE="${PIHOLE_BASE:-$(pwd)}"
 [[ -d "$PIHOLE_BASE" ]] || mkdir -p "$PIHOLE_BASE" || { echo "Couldn't create storage directory: $PIHOLE_BASE"; exit 1; }
 
-# Note: FTLCONF_LOCAL_IPV4 should be replaced with your external ip.
 # Note: port 6969 is adjusted due to other services often running on port 80/8080
 docker run -d \
     --name pihole \
@@ -23,13 +22,24 @@ docker run -d \
     --hostname pi.hole \
     -e VIRTUAL_HOST="pi.hole" \
     -e PROXY_LOCATION="pi.hole" \
-    -e FTLCONF_LOCAL_IPV4="10.0.1.38" \
+    -e FTLCONF_LOCAL_IPV4="$local_ip" \
     pihole/pihole:latest
 
 printf 'Starting up pihole container\n'
-container_id=$(docker ps -q -n 1)
+
+# Wait for the container to start running
+while true; do
+    container_id=$(docker ps -q -n 1)
+    container_status=$(docker inspect -f '{{.State.Status}}' "$container_id")
+    if [ "$container_status" == "running" ]; then
+        break
+    fi
+    sleep 1
+done
+
 printf 'Enter the password you want to use for pi-hole: '
-read password
-docker exec -it $container_id $password -a -p $password -a -p
-echo -e "\n password: $password for pi-hole running at: http://$local_ip:6969/admin"
+read -r password
+docker exec -it "$container_id" pihole -a -p "$password"
+
+echo -e "\npassword: $password for pi-hole running at: http://$local_ip:6969/admin"
 exit 0
