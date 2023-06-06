@@ -1,6 +1,11 @@
 # pihole-setup
 
 ## Install
+- You **NEED** to have docker installed (run the command below to install)
+```
+curl https://get.docker.com/ | bash
+```
+- Afterwards just run this
 ```
 curl https://raw.githubusercontent.com/Duchy12/pihole-setup/main/setup.sh -o setup.sh && chmod +x setup.sh && sudo ./setup.sh
 ```
